@@ -1,0 +1,23 @@
+# OpenTofu / Terraform runtime state and artifacts
+.terraform/
+.tofu/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Local variable files
+*.tfvars
+!*.tfvars.example
+
+# CLI compilation outputs
+bin/
+tools/cli/pontifex
+
+# Operating system metadata
+.DS_Store
+Thumbs.db

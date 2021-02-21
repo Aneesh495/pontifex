@@ -1,0 +1,8 @@
+# Enforce consistent LF line endings
+* text=auto eol=lf
+
+# Linguist overrides to ensure comprehensive HCL classification
+*.tf linguist-language=HCL
+*.tofu linguist-language=HCL
+*.tftest.hcl linguist-language=HCL
+*.hcl linguist-language=HCL
