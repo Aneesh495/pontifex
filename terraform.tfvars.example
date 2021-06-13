@@ -1,0 +1,72 @@
+# Example configuration values for Pontifex planetary fabric.
+# Copy to terraform.tfvars or pass via CLI flags during deployment.
+
+fabric_name          = "pontifex-prime"
+environment          = "production"
+global_supernet_cidr = "10.0.0.0/8"
+asn_base             = 64512
+
+regions = {
+  "us-east-1" = {
+    cloud_provider         = "aws"
+    sovereign_jurisdiction = "us-fed"
+    az_count               = 3
+    anycast_enabled        = true
+    failover_priority      = 1
+    weight                 = 100
+    egress_capacity_gbps   = 100
+  }
+  "us-west-2" = {
+    cloud_provider         = "aws"
+    sovereign_jurisdiction = "us-fed"
+    az_count               = 3
+    anycast_enabled        = true
+    failover_priority      = 2
+    weight                 = 80
+    egress_capacity_gbps   = 80
+  }
+  "eu-central-1" = {
+    cloud_provider         = "gcp"
+    sovereign_jurisdiction = "eu-gdpr"
+    az_count               = 3
+    anycast_enabled        = true
+    failover_priority      = 3
+    weight                 = 90
+    egress_capacity_gbps   = 100
+  }
+  "eu-west-1" = {
+    cloud_provider         = "azure"
+    sovereign_jurisdiction = "eu-gdpr"
+    az_count               = 3
+    anycast_enabled        = false
+    failover_priority      = 4
+    weight                 = 70
+    egress_capacity_gbps   = 50
+  }
+  "ap-southeast-1" = {
+    cloud_provider         = "gcp"
+    sovereign_jurisdiction = "apac-sg"
+    az_count               = 3
+    anycast_enabled        = true
+    failover_priority      = 5
+    weight                 = 60
+    egress_capacity_gbps   = 50
+  }
+}
+
+chaos_enabled             = true
+disruption_budget_percent = 20
+
+golden_signal_thresholds = {
+  latency_p99_ms     = 120
+  error_rate_percent = 0.5
+  saturation_percent = 85
+}
+
+disaster_recovery_sla = {
+  rpo_seconds            = 0
+  rto_seconds            = 30
+  quorum_election_ms     = 500
+  split_brain_guard      = true
+  max_replication_lag_ms = 150
+}
