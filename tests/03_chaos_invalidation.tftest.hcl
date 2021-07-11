@@ -1,4 +1,4 @@
-# Integration test suite validating parameter constraints and rejection of invalid configurations.
+# Parameter constraint enforcement test asserting proper rejection of invalid configurations.
 
 run "reject_invalid_environment_tier" {
   command = plan

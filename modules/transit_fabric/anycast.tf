@@ -30,13 +30,13 @@ locals {
       vrrp_group_id       = 100 + idx
       vrrp_priority       = 250 - (var.regions[reg_key].failover_priority * 20)
       vrrp_advert_int_sec = 1
-      geo_coordinates = {
+      geo_coordinates = lookup({
         "us-east-1"      = { lat = 38.0,  lon = -77.5, continent = "NA" }
         "us-west-2"      = { lat = 45.5,  lon = -122.6, continent = "NA" }
         "eu-central-1"   = { lat = 50.1,  lon = 8.6,   continent = "EU" }
         "eu-west-1"      = { lat = 53.3,  lon = -6.2,  continent = "EU" }
         "ap-southeast-1" = { lat = 1.35,  lon = 103.8, continent = "AS" }
-      }[reg_key]
+      }, reg_key, { lat = 0.0, lon = 0.0, continent = "GLOBAL" })
       health_check = {
         probe_protocol    = "tcp"
         probe_port        = 443

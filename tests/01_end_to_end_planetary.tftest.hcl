@@ -1,5 +1,4 @@
-# End-to-end integration test suite for the planetary transit fabric.
-# Executes full topological plan synthesis across all eight interconnected modules.
+# Planetary fabric end-to-end plan verification across all eight sovereign subsystems.
 
 run "verify_end_to_end_planetary_fabric" {
   command = plan
@@ -11,7 +10,6 @@ run "verify_end_to_end_planetary_fabric" {
     asn_base             = 64512
   }
 
-  # Assert root fabric metadata is populated
   assert {
     condition     = output.fabric_metadata.fabric_name == "pontifex-e2e-planetary"
     error_message = "Fabric name was not propagated to root metadata output."
@@ -27,25 +25,21 @@ run "verify_end_to_end_planetary_fabric" {
     error_message = "Subnets must be allocated across all regional tiers."
   }
 
-  # Assert Security PKI trust bundle is generated
   assert {
     condition     = output.security_pki.root_primary_fingerprint != ""
     error_message = "Root primary certificate SHA-256 fingerprint must be computed."
   }
 
-  # Assert Service Mesh clusters and routes are synthesized
   assert {
     condition     = output.service_mesh_summary.total_clusters > 0
     error_message = "Envoy upstream clusters must be synthesized for registered workloads."
   }
 
-  # Assert Data Plane quorum sizes are valid
   assert {
     condition     = output.data_plane_summary.read_quorum_size == 3 && output.data_plane_summary.write_quorum_size == 3
     error_message = "Majority quorum for 5 regions must be 3 (read=3, write=3)."
   }
 
-  # Assert Disaster Recovery scorecard reports all compliant
   assert {
     condition     = output.disaster_recovery_scorecard.all_workloads_compliant == true
     error_message = "All workloads must pass declarative RPO/RTO SLA evaluations."

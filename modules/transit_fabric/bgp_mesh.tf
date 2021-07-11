@@ -32,14 +32,16 @@ locals {
   # Point-to-point /30 subnet allocation for each transit peering link
   # Sliced deterministically from the primary route reflector transit peering tier (/20)
   primary_transit_tier_cidr = local.regional_tiers[local.sorted_region_keys[0]].transit_peering.cidr
+  transit_prefix_len        = parseint(element(split("/", local.primary_transit_tier_cidr), 1), 10)
+  transit_newbits           = max(1, 30 - local.transit_prefix_len)
 
   peering_links = {
     for idx, pair in local.canonical_peering_pairs : pair.link_id => merge(pair, {
       link_index        = idx
-      link_cidr         = cidrsubnet(local.primary_transit_tier_cidr, 10, idx)
-      router_source_ip  = cidrhost(cidrsubnet(local.primary_transit_tier_cidr, 10, idx), 1)
-      router_target_ip  = cidrhost(cidrsubnet(local.primary_transit_tier_cidr, 10, idx), 2)
-      broadcast_ip      = cidrhost(cidrsubnet(local.primary_transit_tier_cidr, 10, idx), 3)
+      link_cidr         = cidrsubnet(local.primary_transit_tier_cidr, local.transit_newbits, idx)
+      router_source_ip  = cidrhost(cidrsubnet(local.primary_transit_tier_cidr, local.transit_newbits, idx), 1)
+      router_target_ip  = cidrhost(cidrsubnet(local.primary_transit_tier_cidr, local.transit_newbits, idx), 2)
+      broadcast_ip      = cidrhost(cidrsubnet(local.primary_transit_tier_cidr, local.transit_newbits, idx), 3)
       mtu_bytes         = 9000 # Jumbo frames enabled for transit mesh interconnects
       keepalive_seconds = var.bgp_keepalive_seconds
       hold_seconds      = var.bgp_hold_seconds

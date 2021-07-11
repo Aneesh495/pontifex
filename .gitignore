@@ -18,6 +18,9 @@ override.tf.json
 bin/
 tools/cli/pontifex
 
+# Generated runtime manifests and certificate artifacts
+.generated/
+
 # Operating system metadata
 .DS_Store
 Thumbs.db

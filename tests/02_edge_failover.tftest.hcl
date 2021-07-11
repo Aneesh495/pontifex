@@ -1,4 +1,4 @@
-# Integration test suite for dynamic edge failover and region priority reweighting.
+# Edge failover test simulating alternate 2-region topology and Route Reflector promotion.
 
 run "verify_edge_failover_reweighting" {
   command = plan
@@ -6,7 +6,7 @@ run "verify_edge_failover_reweighting" {
   variables {
     fabric_name          = "pontifex-edge-failover-sim"
     environment          = "dr-simulation"
-    global_supernet_cidr = "10.100.0.0/16"
+    global_supernet_cidr = "10.0.0.0/8"
     regions = {
       "us-east-primary" = {
         cloud_provider         = "aws"

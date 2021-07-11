@@ -39,8 +39,8 @@ locals {
     for k in local.test_cache_keys : k => {
       key_hash          = sha256(k)
       assigned_primary  = local.sorted_region_keys[0] # Deterministic assignment in topology model
-      replica_mirrors   = slice(local.sorted_region_keys, 1, 3)
-      replication_count = 3
+      replica_mirrors   = length(local.sorted_region_keys) > 1 ? slice(local.sorted_region_keys, 1, min(3, length(local.sorted_region_keys))) : []
+      replication_count = length(local.sorted_region_keys) >= 3 ? 3 : length(local.sorted_region_keys)
     }
   }
 }
