@@ -67,5 +67,10 @@ output "chaos_and_observability" {
 
 output "disaster_recovery_scorecard" {
   description = "Planetary RPO/RTO SLA verification scorecard."
-  value = module.disaster_recovery.fabric_dr_scorecard
+  value       = module.disaster_recovery.fabric_dr_scorecard
+}
+
+output "governance_policy_verdict" {
+  description = "Consolidated Policy-as-Code governance verdict across all infrastructure policies."
+  value       = module.policies.overall_governance_verdict
 }

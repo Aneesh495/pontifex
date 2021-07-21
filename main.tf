@@ -109,3 +109,14 @@ module "disaster_recovery" {
   disaster_recovery_sla = var.disaster_recovery_sla
   dns_ttl_seconds       = 60
 }
+
+# 9. Declarative Policy-as-Code Governance
+module "policies" {
+  source = "./policies"
+
+  fabric_name          = var.fabric_name
+  environment          = var.environment
+  global_supernet_cidr = var.global_supernet_cidr
+  regions              = var.regions
+  workloads            = var.workloads
+}
