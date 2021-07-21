@@ -8,7 +8,7 @@ locals {
       route_config_name = "route-${wl_key}"
       virtual_hosts = [
         {
-          name    = "vhost-${wl_key}"
+          name = "vhost-${wl_key}"
           domains = [
             "${wl_key}.mesh.internal",
             "${wl_key}.${wl.namespace}.svc.cluster.local",
@@ -21,9 +21,9 @@ locals {
                 prefix = "/"
                 headers = [
                   {
-                    name                 = "x-pontifex-canary"
-                    exact_match          = "true"
-                    invert_match         = false
+                    name         = "x-pontifex-canary"
+                    exact_match  = "true"
+                    invert_match = false
                   }
                 ]
               }

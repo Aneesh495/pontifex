@@ -41,9 +41,9 @@ variable "workloads" {
       max_connections  = number
       ejection_seconds = number
     })
-    rate_limit_rps    = number
-    abac_tier         = string
-    storage_quota_gb  = number
-    replication_mode  = string
+    rate_limit_rps   = number
+    abac_tier        = string
+    storage_quota_gb = number
+    replication_mode = string
   }))
 }

@@ -9,7 +9,7 @@ locals {
       workload    = wl_key
       namespace   = wl.namespace
       delay_fault = {
-        percentage = 5 # 5% injected during active chaos drills
+        percentage     = 5 # 5% injected during active chaos drills
         fixed_delay_ms = 150
         header_trigger = {
           name  = "x-pontifex-fault-delay"
@@ -17,7 +17,7 @@ locals {
         }
       }
       abort_fault = {
-        percentage = 1 # 1% failure rate for resilience verification
+        percentage  = 1 # 1% failure rate for resilience verification
         http_status = 503
         header_trigger = {
           name  = "x-pontifex-fault-abort"
@@ -34,8 +34,8 @@ resource "local_file" "fault_injection_manifest" {
   filename        = "${path.root}/.generated/mesh/fault_injection_filters.json"
   file_permission = "0644"
   content = jsonencode({
-    fabric_name               = var.fabric_name
-    total_fault_profiles      = length(local.workload_fault_injections)
+    fabric_name              = var.fabric_name
+    total_fault_profiles     = length(local.workload_fault_injections)
     fault_injection_profiles = local.workload_fault_injections
   })
 }

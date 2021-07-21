@@ -5,30 +5,30 @@ locals {
   # Storage tier lifecycle definition
   storage_lifecycle_tiers = {
     "hot" = {
-      tier_name             = "HOT_NVME"
-      min_retention_days    = 0
-      max_retention_days    = 30
-      storage_class         = "STANDARD_NVME_REPLICATED"
-      latency_sla_ms        = 1
-      cross_region_mirror   = true
+      tier_name           = "HOT_NVME"
+      min_retention_days  = 0
+      max_retention_days  = 30
+      storage_class       = "STANDARD_NVME_REPLICATED"
+      latency_sla_ms      = 1
+      cross_region_mirror = true
     }
     "warm" = {
-      tier_name             = "WARM_OBJECT"
-      min_retention_days    = 30
-      max_retention_days    = 90
-      storage_class         = "INFREQUENT_ACCESS"
-      latency_sla_ms        = 25
-      cross_region_mirror   = true
+      tier_name           = "WARM_OBJECT"
+      min_retention_days  = 30
+      max_retention_days  = 90
+      storage_class       = "INFREQUENT_ACCESS"
+      latency_sla_ms      = 25
+      cross_region_mirror = true
     }
     "cold_archive" = {
-      tier_name             = "COLD_COMPLIANCE_ARCHIVE"
-      min_retention_days    = 90
-      max_retention_days    = 2555 # 7 years statutory retention
-      storage_class         = "GLACIER_DEEP_VAULT"
-      latency_sla_ms        = 43200000 # 12 hours retrieval window
-      cross_region_mirror   = false
-      worm_object_lock      = true
-      compliance_retention  = "COMPLIANCE_LEGAL_HOLD"
+      tier_name            = "COLD_COMPLIANCE_ARCHIVE"
+      min_retention_days   = 90
+      max_retention_days   = 2555 # 7 years statutory retention
+      storage_class        = "GLACIER_DEEP_VAULT"
+      latency_sla_ms       = 43200000 # 12 hours retrieval window
+      cross_region_mirror  = false
+      worm_object_lock     = true
+      compliance_retention = "COMPLIANCE_LEGAL_HOLD"
     }
   }
 

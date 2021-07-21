@@ -4,8 +4,8 @@
 locals {
   # Strict TLS 1.3 profile configuration
   tls_profile = {
-    min_version     = "TLSv1_3"
-    max_version     = "TLSv1_3"
+    min_version = "TLSv1_3"
+    max_version = "TLSv1_3"
     cipher_suites = [
       "TLS_AES_256_GCM_SHA384",
       "TLS_CHACHA20_POLY1305_SHA256",
@@ -21,11 +21,11 @@ locals {
       "grpc",
       "http/1.1"
     ]
-    require_client_cert    = true
-    verify_cert_chain      = true
-    verify_spiffe_san      = true
-    handshake_timeout_sec  = 5
-    session_tickets_mode   = "disabled" # Forward secrecy preservation
+    require_client_cert   = true
+    verify_cert_chain     = true
+    verify_spiffe_san     = true
+    handshake_timeout_sec = 5
+    session_tickets_mode  = "disabled" # Forward secrecy preservation
   }
 
   # Peer-to-peer SPIFFE authorization matrix defining allowed mTLS caller handshakes

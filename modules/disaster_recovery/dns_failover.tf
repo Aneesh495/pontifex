@@ -15,22 +15,22 @@ locals {
       primary_target   = "10.0.0.10" # Primary Anycast VIP
       secondary_target = "10.0.0.11" # Backup Anycast VIP
       health_check = {
-        probe_path             = "/healthz"
-        probe_port             = 443
-        probe_protocol         = "HTTPS"
-        interval_seconds       = 10
-        consecutive_failures   = 3
-        invert_health_check    = false
+        probe_path           = "/healthz"
+        probe_port           = 443
+        probe_protocol       = "HTTPS"
+        interval_seconds     = 10
+        consecutive_failures = 3
+        invert_health_check  = false
       }
     }
     "regional-endpoints" = {
       for reg_key, reg in var.regions : reg_key => {
-        record_name      = "${reg_key}.api.${local.dns_zone_name}"
-        record_type      = "A"
-        ttl_seconds      = var.dns_ttl_seconds
-        routing_policy   = "WEIGHTED"
-        weight           = reg.weight
-        failover_target  = local.flattened_promotion_ladder[min(reg.failover_priority, length(local.flattened_promotion_ladder) - 1)]
+        record_name     = "${reg_key}.api.${local.dns_zone_name}"
+        record_type     = "A"
+        ttl_seconds     = var.dns_ttl_seconds
+        routing_policy  = "WEIGHTED"
+        weight          = reg.weight
+        failover_target = local.flattened_promotion_ladder[min(reg.failover_priority, length(local.flattened_promotion_ladder) - 1)]
       }
     }
   }

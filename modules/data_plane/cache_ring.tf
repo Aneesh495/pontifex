@@ -20,16 +20,16 @@ locals {
   # Cache tier cluster configurations per sovereign region
   regional_cache_clusters = {
     for reg_key in local.sorted_region_keys : reg_key => {
-      cluster_id               = "cache-${reg_key}"
-      region_key               = reg_key
-      jurisdiction             = var.regions[reg_key].sovereign_jurisdiction
-      replication_factor       = 3 # Primary plus two cross-region replica mirrors
-      max_memory_mb            = 65536 # 64GB cache pool
-      eviction_policy          = "allkeys-lru"
-      enable_persistence_rdb   = true
-      snapshot_interval_sec    = 900
-      tls_auth_required        = true
-      virtual_nodes_allocated  = var.cache_virtual_nodes
+      cluster_id              = "cache-${reg_key}"
+      region_key              = reg_key
+      jurisdiction            = var.regions[reg_key].sovereign_jurisdiction
+      replication_factor      = 3     # Primary plus two cross-region replica mirrors
+      max_memory_mb           = 65536 # 64GB cache pool
+      eviction_policy         = "allkeys-lru"
+      enable_persistence_rdb  = true
+      snapshot_interval_sec   = 900
+      tls_auth_required       = true
+      virtual_nodes_allocated = var.cache_virtual_nodes
     }
   }
 

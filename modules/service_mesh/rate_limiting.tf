@@ -14,7 +14,7 @@ locals {
           key   = "service_global"
           value = wl_key
           rate_limit = {
-            unit            = "SECOND"
+            unit              = "SECOND"
             requests_per_unit = wl.rate_limit_rps
           }
         },
@@ -23,7 +23,7 @@ locals {
           key   = "caller_principal"
           value = "*"
           rate_limit = {
-            unit            = "SECOND"
+            unit              = "SECOND"
             requests_per_unit = max(100, floor(wl.rate_limit_rps / 5))
           }
         },
@@ -32,16 +32,16 @@ locals {
           key   = "client_ip"
           value = "*"
           rate_limit = {
-            unit            = "MINUTE"
+            unit              = "MINUTE"
             requests_per_unit = 300
           }
         }
       ]
       token_bucket_settings = {
-        max_tokens          = wl.rate_limit_rps * 2
-        tokens_per_fill     = wl.rate_limit_rps
-        fill_interval_ms    = 1000
-        enable_shadow_mode  = false # Enforce actively in production
+        max_tokens         = wl.rate_limit_rps * 2
+        tokens_per_fill    = wl.rate_limit_rps
+        fill_interval_ms   = 1000
+        enable_shadow_mode = false # Enforce actively in production
       }
       rejection_response = {
         http_status     = 429

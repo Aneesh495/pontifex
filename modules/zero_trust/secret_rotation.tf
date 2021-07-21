@@ -42,8 +42,8 @@ resource "random_password" "mesh_internal_tokens" {
 locals {
   # Secret lifecycle metadata ledger (excluding sensitive cleartext)
   secret_rotation_records = {
-    rotation_epoch            = time_rotating.credential_rotation_schedule.rotation_rfc3339
-    rotation_interval_hours   = var.secret_rotation_interval_hours
+    rotation_epoch          = time_rotating.credential_rotation_schedule.rotation_rfc3339
+    rotation_interval_hours = var.secret_rotation_interval_hours
     database_secret_versions = {
       for reg_key in keys(var.regions) : reg_key => {
         secret_id         = "sec-db-${reg_key}"

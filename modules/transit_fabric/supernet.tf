@@ -111,7 +111,7 @@ locals {
   ])
 
   # Unique count validation assertion
-  total_subnets_count = length(local.all_allocated_cidrs)
+  total_subnets_count  = length(local.all_allocated_cidrs)
   unique_subnets_count = length(distinct(local.all_allocated_cidrs))
 }
 
@@ -120,14 +120,14 @@ resource "local_file" "supernet_manifest" {
   filename        = "${path.root}/.generated/supernet_manifest.json"
   file_permission = "0644"
   content = jsonencode({
-    fabric_name         = var.fabric_name
-    environment         = var.environment
-    root_supernet_cidr  = var.global_supernet_cidr
-    total_regions       = length(local.sorted_region_keys)
-    total_subnets       = local.total_subnets_count
-    subnets_are_unique  = local.total_subnets_count == local.unique_subnets_count
-    regional_supernets  = local.regional_supernets
-    regional_tiers      = local.regional_tiers
-    availability_zones  = local.az_subnets
+    fabric_name        = var.fabric_name
+    environment        = var.environment
+    root_supernet_cidr = var.global_supernet_cidr
+    total_regions      = length(local.sorted_region_keys)
+    total_subnets      = local.total_subnets_count
+    subnets_are_unique = local.total_subnets_count == local.unique_subnets_count
+    regional_supernets = local.regional_supernets
+    regional_tiers     = local.regional_tiers
+    availability_zones = local.az_subnets
   })
 }

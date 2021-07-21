@@ -5,36 +5,36 @@ locals {
   # Formal steady-state hypothesis declarations
   steady_state_hypotheses = {
     "H1_LATENCY_CEILING" = {
-      description          = "P99 latency across all non-partitioned regions must remain within 150ms"
-      metric_query         = "histogram_quantile(0.99, sum(rate(envoy_cluster_upstream_rq_time_bucket[1m])) by (le))"
-      operator             = "<="
-      threshold_ms         = 150
+      description           = "P99 latency across all non-partitioned regions must remain within 150ms"
+      metric_query          = "histogram_quantile(0.99, sum(rate(envoy_cluster_upstream_rq_time_bucket[1m])) by (le))"
+      operator              = "<="
+      threshold_ms          = 150
       evaluation_window_sec = 30
-      is_blocking          = true
+      is_blocking           = true
     }
     "H2_ERROR_RATE_BUDGET" = {
-      description          = "Fabric 5xx error rate must not exceed 0.5% during active drill execution"
-      metric_query         = "sum(rate(envoy_cluster_upstream_rq_5xx[1m])) / sum(rate(envoy_cluster_upstream_rq[1m])) * 100"
-      operator             = "<="
-      threshold_percent    = 0.5
+      description           = "Fabric 5xx error rate must not exceed 0.5% during active drill execution"
+      metric_query          = "sum(rate(envoy_cluster_upstream_rq_5xx[1m])) / sum(rate(envoy_cluster_upstream_rq[1m])) * 100"
+      operator              = "<="
+      threshold_percent     = 0.5
       evaluation_window_sec = 15
-      is_blocking          = true
+      is_blocking           = true
     }
     "H3_QUORUM_INTEGRITY" = {
-      description          = "Surviving cluster partition must retain strict majority quorum count"
-      metric_query         = "pontifex_quorum_active_nodes"
-      operator             = ">="
-      threshold_nodes      = floor(length(var.regions) / 2) + 1
+      description           = "Surviving cluster partition must retain strict majority quorum count"
+      metric_query          = "pontifex_quorum_active_nodes"
+      operator              = ">="
+      threshold_nodes       = floor(length(var.regions) / 2) + 1
       evaluation_window_sec = 5
-      is_blocking          = true
+      is_blocking           = true
     }
     "H4_OUTLIER_EJECTION" = {
-      description          = "Unhealthy hosts failing health probes must be ejected within 15 seconds"
-      metric_query         = "envoy_cluster_outlier_detection_ejections_active"
-      operator             = ">="
-      threshold_count      = 1
+      description           = "Unhealthy hosts failing health probes must be ejected within 15 seconds"
+      metric_query          = "envoy_cluster_outlier_detection_ejections_active"
+      operator              = ">="
+      threshold_count       = 1
       evaluation_window_sec = 20
-      is_blocking          = false
+      is_blocking           = false
     }
   }
 

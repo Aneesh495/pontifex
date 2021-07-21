@@ -8,7 +8,7 @@ locals {
       has_valid_service_account = can(regex("^[a-z0-9-]+$", wl.service_account)) && length(wl.service_account) >= 3
       has_designated_namespace  = can(regex("^[a-z0-9-]+$", wl.namespace)) && length(wl.namespace) >= 3
       valid_port_range          = wl.port >= 1024 && wl.port <= 65535
-      is_compliant              = (
+      is_compliant = (
         (can(regex("^[a-z0-9-]+$", wl.service_account)) && length(wl.service_account) >= 3) &&
         (can(regex("^[a-z0-9-]+$", wl.namespace)) && length(wl.namespace) >= 3) &&
         (wl.port >= 1024 && wl.port <= 65535)
@@ -23,7 +23,7 @@ locals {
   # Policy Rule 2: Tier-0 Critical Workloads must enforce maximum circuit breaker protections
   tier0_circuit_breaker_compliance = {
     for wl_key, wl in var.workloads : wl_key => {
-      is_tier0 = wl.abac_tier == "tier-0-critical"
+      is_tier0             = wl.abac_tier == "tier-0-critical"
       consecutive_5xx_safe = wl.circuit_breaker.consecutive_5xx <= 3
       ejection_time_safe   = wl.circuit_breaker.ejection_seconds >= 30
       is_compliant         = wl.abac_tier != "tier-0-critical" || (wl.circuit_breaker.consecutive_5xx <= 3 && wl.circuit_breaker.ejection_seconds >= 30)
@@ -36,9 +36,9 @@ locals {
 
   # Consolidated Cryptographic Policy Evaluation
   crypto_policy_scorecard = {
-    policy_name                         = "POL-SEC-001: Zero-Trust Cryptographic Enforcement"
-    all_workloads_pki_compliant         = local.all_workloads_pki_compliant
+    policy_name                          = "POL-SEC-001: Zero-Trust Cryptographic Enforcement"
+    all_workloads_pki_compliant          = local.all_workloads_pki_compliant
     all_tier0_circuit_breakers_compliant = local.all_tier0_circuit_breakers_compliant
-    overall_status                      = (local.all_workloads_pki_compliant && local.all_tier0_circuit_breakers_compliant) ? "PASSED" : "FAILED"
+    overall_status                       = (local.all_workloads_pki_compliant && local.all_tier0_circuit_breakers_compliant) ? "PASSED" : "FAILED"
   }
 }

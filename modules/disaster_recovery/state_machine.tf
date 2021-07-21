@@ -27,7 +27,7 @@ locals {
     }
     states = {
       "HEALTHY_NOMINAL" = {
-        description     = "All sovereign regions operational; quorum verified; symmetric active-active routing"
+        description         = "All sovereign regions operational; quorum verified; symmetric active-active routing"
         allowed_transitions = ["DEGRADED_FAILOVER_ARMED"]
         invariants = {
           min_healthy_nodes = local.majority_threshold
@@ -36,7 +36,7 @@ locals {
         }
       }
       "DEGRADED_FAILOVER_ARMED" = {
-        description     = "Single region heartbeat missed; standby regions pre-warmed for leadership promotion"
+        description         = "Single region heartbeat missed; standby regions pre-warmed for leadership promotion"
         allowed_transitions = ["REGIONAL_ELECTION_IN_PROGRESS", "HEALTHY_NOMINAL"]
         invariants = {
           min_healthy_nodes = local.majority_threshold
@@ -45,7 +45,7 @@ locals {
         }
       }
       "REGIONAL_ELECTION_IN_PROGRESS" = {
-        description     = "Primary region confirmed down; distributed election initiated across remaining nodes"
+        description         = "Primary region confirmed down; distributed election initiated across remaining nodes"
         allowed_transitions = ["FAILOVER_PRIMARY_PROMOTED", "SPLIT_BRAIN_QUORUM_LOCKED"]
         invariants = {
           min_healthy_nodes = local.majority_threshold
@@ -54,7 +54,7 @@ locals {
         }
       }
       "FAILOVER_PRIMARY_PROMOTED" = {
-        description     = "New regional leader elected; fencing token incremented; Anycast BGP metrics flipped"
+        description         = "New regional leader elected; fencing token incremented; Anycast BGP metrics flipped"
         allowed_transitions = ["HEALTHY_NOMINAL", "DEGRADED_FAILOVER_ARMED"]
         invariants = {
           min_healthy_nodes = local.majority_threshold
@@ -63,7 +63,7 @@ locals {
         }
       }
       "SPLIT_BRAIN_QUORUM_LOCKED" = {
-        description     = "Partition without majority quorum isolated; locked to read-only to preserve data integrity"
+        description         = "Partition without majority quorum isolated; locked to read-only to preserve data integrity"
         allowed_transitions = ["HEALTHY_NOMINAL"]
         invariants = {
           min_healthy_nodes = 0

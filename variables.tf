@@ -124,10 +124,10 @@ variable "workloads" {
       max_connections  = number
       ejection_seconds = number
     })
-    rate_limit_rps    = number
-    abac_tier         = string
-    storage_quota_gb  = number
-    replication_mode  = string
+    rate_limit_rps   = number
+    abac_tier        = string
+    storage_quota_gb = number
+    replication_mode = string
   }))
   default = {
     "auth-service" = {
@@ -141,10 +141,10 @@ variable "workloads" {
         max_connections  = 1000
         ejection_seconds = 30
       }
-      rate_limit_rps    = 5000
-      abac_tier         = "tier-0-critical"
-      storage_quota_gb  = 100
-      replication_mode  = "active-active-crdt"
+      rate_limit_rps   = 5000
+      abac_tier        = "tier-0-critical"
+      storage_quota_gb = 100
+      replication_mode = "active-active-crdt"
     }
     "order-processor" = {
       namespace         = "commerce"
@@ -157,10 +157,10 @@ variable "workloads" {
         max_connections  = 500
         ejection_seconds = 15
       }
-      rate_limit_rps    = 2500
-      abac_tier         = "tier-1-business"
-      storage_quota_gb  = 500
-      replication_mode  = "active-active-quorum"
+      rate_limit_rps   = 2500
+      abac_tier        = "tier-1-business"
+      storage_quota_gb = 500
+      replication_mode = "active-active-quorum"
     }
     "inventory-sync" = {
       namespace         = "supply-chain"
@@ -173,10 +173,10 @@ variable "workloads" {
         max_connections  = 300
         ejection_seconds = 20
       }
-      rate_limit_rps    = 1200
-      abac_tier         = "tier-2-standard"
-      storage_quota_gb  = 250
-      replication_mode  = "eventual-consistent"
+      rate_limit_rps   = 1200
+      abac_tier        = "tier-2-standard"
+      storage_quota_gb = 250
+      replication_mode = "eventual-consistent"
     }
     "telemetry-collector" = {
       namespace         = "observability"
@@ -189,10 +189,10 @@ variable "workloads" {
         max_connections  = 2000
         ejection_seconds = 10
       }
-      rate_limit_rps    = 10000
-      abac_tier         = "tier-3-system"
-      storage_quota_gb  = 1000
-      replication_mode  = "partitioned-wal"
+      rate_limit_rps   = 10000
+      abac_tier        = "tier-3-system"
+      storage_quota_gb = 1000
+      replication_mode = "partitioned-wal"
     }
   }
 }

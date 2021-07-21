@@ -5,14 +5,14 @@ locals {
   # JWT Provider configuration
   jwt_providers = {
     "pontifex-idp" = {
-      issuer                    = var.jwt_issuer
-      audiences                 = ["https://pontifex.internal", "https://api.pontifex.internal"]
-      remote_jwks_uri           = "${var.jwt_issuer}/.well-known/jwks.json"
-      cache_duration_seconds    = 300
-      forward                   = true
-      forward_payload_header    = "x-jwt-claims"
-      payload_in_metadata       = "jwt_payload"
-      clock_skew_seconds        = 30
+      issuer                 = var.jwt_issuer
+      audiences              = ["https://pontifex.internal", "https://api.pontifex.internal"]
+      remote_jwks_uri        = "${var.jwt_issuer}/.well-known/jwks.json"
+      cache_duration_seconds = 300
+      forward                = true
+      forward_payload_header = "x-jwt-claims"
+      payload_in_metadata    = "jwt_payload"
+      clock_skew_seconds     = 30
     }
   }
 

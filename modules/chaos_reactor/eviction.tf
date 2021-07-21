@@ -29,13 +29,13 @@ locals {
   # Canary intentional failure injection drill (verify autonomous circuit rollback)
   canary_failure_drills = {
     for wl_key, wl in var.workloads : "canary-abort-${wl_key}" => {
-      drill_id               = "drill-canary-abort-${wl_key}"
-      target_workload        = wl_key
-      target_cluster         = "${wl_key}--canary"
-      injected_error_code    = 500
-      error_percentage       = 100
-      rollback_trigger_time  = "30s"
-      success_criteria       = "Canary traffic weight automatically drops to 0% after 3 consecutive 5xx responses"
+      drill_id              = "drill-canary-abort-${wl_key}"
+      target_workload       = wl_key
+      target_cluster        = "${wl_key}--canary"
+      injected_error_code   = 500
+      error_percentage      = 100
+      rollback_trigger_time = "30s"
+      success_criteria      = "Canary traffic weight automatically drops to 0% after 3 consecutive 5xx responses"
     }
     if wl.canary_percentage > 0
   }

@@ -18,9 +18,9 @@ locals {
   # Policy Rule 3: Tier-0 services must enforce active-active state replication
   tier0_replication_compliance = {
     for wl_key, wl in var.workloads : wl_key => {
-      is_tier0          = wl.abac_tier == "tier-0-critical"
-      replication_mode  = wl.replication_mode
-      is_compliant      = wl.abac_tier != "tier-0-critical" || wl.replication_mode == "active-active-crdt" || wl.replication_mode == "active-active-quorum"
+      is_tier0         = wl.abac_tier == "tier-0-critical"
+      replication_mode = wl.replication_mode
+      is_compliant     = wl.abac_tier != "tier-0-critical" || wl.replication_mode == "active-active-crdt" || wl.replication_mode == "active-active-quorum"
     }
   }
 

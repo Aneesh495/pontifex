@@ -31,9 +31,9 @@ locals {
     regional_crl_endpoints = {
       for reg_key in local.sorted_region_keys : reg_key => "http://crl.${var.trust_domain}/intermediates/${reg_key}.crl"
     }
-    ocsp_responder_url         = "http://ocsp.${var.trust_domain}/"
-    crl_refresh_interval_sec   = 3600
-    ocsp_cache_duration_sec    = 7200
+    ocsp_responder_url       = "http://ocsp.${var.trust_domain}/"
+    crl_refresh_interval_sec = 3600
+    ocsp_cache_duration_sec  = 7200
   }
 }
 

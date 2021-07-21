@@ -69,51 +69,51 @@ locals {
   # Attribute-Based Access Control (ABAC) Tier Classification Matrix
   abac_tiers = {
     "tier-0-critical" = {
-      clearance_level           = 0
-      enforce_mtls              = true
-      enforce_jwt               = true
-      require_hardware_token    = true
-      allowed_egress_protocols  = ["grpc-tls"]
-      max_concurrent_sessions   = 100
-      audit_logging_level       = "VERBOSE"
+      clearance_level          = 0
+      enforce_mtls             = true
+      enforce_jwt              = true
+      require_hardware_token   = true
+      allowed_egress_protocols = ["grpc-tls"]
+      max_concurrent_sessions  = 100
+      audit_logging_level      = "VERBOSE"
     }
     "tier-1-business" = {
-      clearance_level           = 1
-      enforce_mtls              = true
-      enforce_jwt               = true
-      require_hardware_token    = false
-      allowed_egress_protocols  = ["grpc-tls", "https"]
-      max_concurrent_sessions   = 500
-      audit_logging_level       = "STANDARD"
+      clearance_level          = 1
+      enforce_mtls             = true
+      enforce_jwt              = true
+      require_hardware_token   = false
+      allowed_egress_protocols = ["grpc-tls", "https"]
+      max_concurrent_sessions  = 500
+      audit_logging_level      = "STANDARD"
     }
     "tier-2-standard" = {
-      clearance_level           = 2
-      enforce_mtls              = true
-      enforce_jwt               = false
-      require_hardware_token    = false
-      allowed_egress_protocols  = ["grpc-tls", "https", "tcp-tls"]
-      max_concurrent_sessions   = 1000
-      audit_logging_level       = "STANDARD"
+      clearance_level          = 2
+      enforce_mtls             = true
+      enforce_jwt              = false
+      require_hardware_token   = false
+      allowed_egress_protocols = ["grpc-tls", "https", "tcp-tls"]
+      max_concurrent_sessions  = 1000
+      audit_logging_level      = "STANDARD"
     }
     "tier-3-system" = {
-      clearance_level           = 3
-      enforce_mtls              = true
-      enforce_jwt               = false
-      require_hardware_token    = false
-      allowed_egress_protocols  = ["grpc-tls"]
-      max_concurrent_sessions   = 2000
-      audit_logging_level       = "MINIMAL"
+      clearance_level          = 3
+      enforce_mtls             = true
+      enforce_jwt              = false
+      require_hardware_token   = false
+      allowed_egress_protocols = ["grpc-tls"]
+      max_concurrent_sessions  = 2000
+      audit_logging_level      = "MINIMAL"
     }
   }
 
   # Binding matrix: Maps each registered workload to its evaluated ABAC policy
   workload_abac_bindings = {
     for wl_key, wl in var.workloads : wl_key => {
-      service_name     = wl_key
-      namespace        = wl.namespace
-      assigned_tier    = wl.abac_tier
-      tier_policy      = local.abac_tiers[wl.abac_tier]
-      spiffe_identity  = "spiffe://pontifex.internal/ns/${wl.namespace}/sa/${wl.service_account}"
+      service_name    = wl_key
+      namespace       = wl.namespace
+      assigned_tier   = wl.abac_tier
+      tier_policy     = local.abac_tiers[wl.abac_tier]
+      spiffe_identity = "spiffe://pontifex.internal/ns/${wl.namespace}/sa/${wl.service_account}"
     }
   }
 }

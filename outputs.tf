@@ -4,15 +4,15 @@
 output "fabric_metadata" {
   description = "Planetary transit fabric deployment metadata and topology overview."
   value = {
-    fabric_name       = var.fabric_name
-    environment       = var.environment
-    supernet_cidr     = var.global_supernet_cidr
-    active_regions    = keys(var.regions)
-    region_count      = length(var.regions)
-    total_subnets     = module.transit_fabric.total_subnets_count
-    primary_anycast   = module.transit_fabric.primary_anycast_vip
-    trust_domain      = "pontifex.internal"
-    chaos_enabled     = var.chaos_enabled
+    fabric_name     = var.fabric_name
+    environment     = var.environment
+    supernet_cidr   = var.global_supernet_cidr
+    active_regions  = keys(var.regions)
+    region_count    = length(var.regions)
+    total_subnets   = module.transit_fabric.total_subnets_count
+    primary_anycast = module.transit_fabric.primary_anycast_vip
+    trust_domain    = "pontifex.internal"
+    chaos_enabled   = var.chaos_enabled
   }
 }
 

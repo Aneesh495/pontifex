@@ -42,9 +42,9 @@ locals {
   wal_partition_assignments = {
     for topic_name, topic in local.wal_topics : topic_name => [
       for p_idx in range(topic.partitions) : {
-        partition_id       = p_idx
-        leader_region      = local.sorted_region_keys[p_idx % local.total_region_count]
-        in_sync_replicas   = [
+        partition_id  = p_idx
+        leader_region = local.sorted_region_keys[p_idx % local.total_region_count]
+        in_sync_replicas = [
           for r_idx in range(topic.replication_factor) : local.sorted_region_keys[(p_idx + r_idx) % local.total_region_count]
         ]
         max_lag_threshold_ms = 250
@@ -54,8 +54,8 @@ locals {
 
   # Replication lag monitoring criteria
   lag_monitoring_thresholds = {
-    warning_threshold_ms  = 100
-    critical_threshold_ms = 500
+    warning_threshold_ms       = 100
+    critical_threshold_ms      = 500
     auto_eject_lagging_replica = true
     ejection_grace_period_sec  = 30
   }

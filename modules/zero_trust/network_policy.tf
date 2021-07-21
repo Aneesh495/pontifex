@@ -5,9 +5,9 @@ locals {
   # Default-deny microsegmentation policies mapped per namespace
   namespace_security_policies = {
     "identity" = {
-      namespace           = "identity"
-      default_ingress     = "DENY_ALL"
-      default_egress      = "DENY_ALL"
+      namespace       = "identity"
+      default_ingress = "DENY_ALL"
+      default_egress  = "DENY_ALL"
       ingress_whitelists = [
         {
           source_namespace = "commerce"
@@ -40,9 +40,9 @@ locals {
       ]
     }
     "commerce" = {
-      namespace           = "commerce"
-      default_ingress     = "DENY_ALL"
-      default_egress      = "DENY_ALL"
+      namespace       = "commerce"
+      default_ingress = "DENY_ALL"
+      default_egress  = "DENY_ALL"
       ingress_whitelists = [
         {
           source_namespace = "public-ingress"
@@ -81,9 +81,9 @@ locals {
       ]
     }
     "supply-chain" = {
-      namespace           = "supply-chain"
-      default_ingress     = "DENY_ALL"
-      default_egress      = "DENY_ALL"
+      namespace       = "supply-chain"
+      default_ingress = "DENY_ALL"
+      default_egress  = "DENY_ALL"
       ingress_whitelists = [
         {
           source_namespace = "commerce"
@@ -103,9 +103,9 @@ locals {
       ]
     }
     "observability" = {
-      namespace           = "observability"
-      default_ingress     = "DENY_ALL"
-      default_egress      = "DENY_ALL"
+      namespace       = "observability"
+      default_ingress = "DENY_ALL"
+      default_egress  = "DENY_ALL"
       ingress_whitelists = [
         {
           source_namespace = "*"
@@ -132,9 +132,9 @@ resource "local_file" "network_policies_manifest" {
   filename        = "${path.root}/.generated/security/network_microsegmentation_policies.json"
   file_permission = "0644"
   content = jsonencode({
-    fabric_name          = var.fabric_name
-    total_namespaces     = length(local.namespace_security_policies)
-    isolation_mode       = "STRICT_DEFAULT_DENY"
-    namespace_policies   = local.namespace_security_policies
+    fabric_name        = var.fabric_name
+    total_namespaces   = length(local.namespace_security_policies)
+    isolation_mode     = "STRICT_DEFAULT_DENY"
+    namespace_policies = local.namespace_security_policies
   })
 }

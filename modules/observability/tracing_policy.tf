@@ -11,8 +11,8 @@ locals {
     policies = [
       # Always sample 100% of error traces
       {
-        name          = "filter-errors-always-sample"
-        type          = "status_code"
+        name = "filter-errors-always-sample"
+        type = "status_code"
         status_code = {
           status_codes = ["ERROR", "UNSET"]
         }
@@ -30,8 +30,8 @@ locals {
         name = "filter-chaos-experiment-traces"
         type = "string_attribute"
         string_attribute = {
-          key                 = "x-pontifex-chaos"
-          values              = ["active", "true"]
+          key                    = "x-pontifex-chaos"
+          values                 = ["active", "true"]
           enabled_regex_matching = false
         }
       },

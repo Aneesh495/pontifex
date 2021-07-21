@@ -18,11 +18,11 @@ locals {
   canonical_peering_pairs = flatten([
     for idx_a, reg_a in local.sorted_region_keys : [
       for idx_b, reg_b in local.sorted_region_keys : {
-        link_id     = "${reg_a}--${reg_b}"
-        source      = reg_a
-        target      = reg_b
-        source_asn  = local.regional_asns[reg_a]
-        target_asn  = local.regional_asns[reg_b]
+        link_id       = "${reg_a}--${reg_b}"
+        source        = reg_a
+        target        = reg_b
+        source_asn    = local.regional_asns[reg_a]
+        target_asn    = local.regional_asns[reg_b]
         is_rr_peering = contains(local.route_reflector_nodes, reg_a) || contains(local.route_reflector_nodes, reg_b)
       }
       if idx_a < idx_b

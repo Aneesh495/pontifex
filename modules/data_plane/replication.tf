@@ -7,8 +7,8 @@ locals {
   total_region_count = length(local.sorted_region_keys)
 
   # Quorum consensus parameters (Strict Read + Write Quorum > N)
-  read_quorum_size  = floor(local.total_region_count / 2) + 1
-  write_quorum_size = floor(local.total_region_count / 2) + 1
+  read_quorum_size           = floor(local.total_region_count / 2) + 1
+  write_quorum_size          = floor(local.total_region_count / 2) + 1
   quorum_invariant_satisfied = (local.read_quorum_size + local.write_quorum_size) > local.total_region_count
 
   # Multi-region replication group configurations per workload
@@ -19,19 +19,19 @@ locals {
       replication_mode = wl.replication_mode
       consistency_profile = {
         "active-active-crdt" = {
-          crdt_data_structure       = "ORSet-ObservedRemoveSet"
-          conflict_resolution_rule  = "state-based-join-semilattice"
-          vector_clock_enabled      = true
-          monotonic_clock_source    = "ptp-hardware-time"
-          target_sync_interval_ms   = var.replication_sync_interval_ms
-          max_divergence_time_ms    = 500
+          crdt_data_structure      = "ORSet-ObservedRemoveSet"
+          conflict_resolution_rule = "state-based-join-semilattice"
+          vector_clock_enabled     = true
+          monotonic_clock_source   = "ptp-hardware-time"
+          target_sync_interval_ms  = var.replication_sync_interval_ms
+          max_divergence_time_ms   = 500
         }
         "active-active-quorum" = {
-          consensus_protocol        = "multi-paxos-leaderless"
-          read_quorum               = local.read_quorum_size
-          write_quorum              = local.write_quorum_size
-          commit_timeout_ms         = 200
-          split_brain_protection    = true
+          consensus_protocol     = "multi-paxos-leaderless"
+          read_quorum            = local.read_quorum_size
+          write_quorum           = local.write_quorum_size
+          commit_timeout_ms      = 200
+          split_brain_protection = true
         }
         "eventual-consistent" = {
           crdt_data_structure       = "PNCounter-PositiveNegative"
@@ -40,9 +40,9 @@ locals {
           convergence_guarantee_sec = 10
         }
         "partitioned-wal" = {
-          log_append_mode           = "batch-pipelined"
-          min_in_sync_replicas      = max(2, floor(local.total_region_count / 2))
-          compression_codec         = "zstd"
+          log_append_mode      = "batch-pipelined"
+          min_in_sync_replicas = max(2, floor(local.total_region_count / 2))
+          compression_codec    = "zstd"
         }
       }[wl.replication_mode]
       participating_regions = local.sorted_region_keys

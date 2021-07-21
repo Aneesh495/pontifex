@@ -12,21 +12,21 @@ locals {
         for wl_key, wl in var.workloads : [
           # Primary baseline cluster
           {
-            cluster_id          = "${wl_key}--${reg_key}--primary"
-            workload_key        = wl_key
-            region_key          = reg_key
-            is_canary           = false
-            connect_timeout_ms  = var.connect_timeout_ms
-            lb_policy           = "LEAST_REQUEST"
-            dns_lookup_family   = "V4_ONLY"
-            service_port        = wl.port
-            protocol            = wl.protocol
-            spiffe_target_uri   = "spiffe://pontifex.internal/ns/${wl.namespace}/sa/${wl.service_account}"
-            dns_endpoint        = "${wl_key}.${wl.namespace}.svc.${reg_key}.pontifex.internal"
-            max_connections     = wl.circuit_breaker.max_connections
-            max_pending_reqs    = wl.circuit_breaker.max_connections * 2
-            max_requests        = wl.circuit_breaker.max_connections * 5
-            max_retries         = 3
+            cluster_id         = "${wl_key}--${reg_key}--primary"
+            workload_key       = wl_key
+            region_key         = reg_key
+            is_canary          = false
+            connect_timeout_ms = var.connect_timeout_ms
+            lb_policy          = "LEAST_REQUEST"
+            dns_lookup_family  = "V4_ONLY"
+            service_port       = wl.port
+            protocol           = wl.protocol
+            spiffe_target_uri  = "spiffe://pontifex.internal/ns/${wl.namespace}/sa/${wl.service_account}"
+            dns_endpoint       = "${wl_key}.${wl.namespace}.svc.${reg_key}.pontifex.internal"
+            max_connections    = wl.circuit_breaker.max_connections
+            max_pending_reqs   = wl.circuit_breaker.max_connections * 2
+            max_requests       = wl.circuit_breaker.max_connections * 5
+            max_retries        = 3
             http2_protocol_opts = wl.protocol == "grpc" || wl.protocol == "http2" ? {
               hpack_table_size               = 4096
               max_concurrent_streams         = 1024
@@ -36,21 +36,21 @@ locals {
           },
           # Canary candidate cluster (if canary percentage > 0)
           {
-            cluster_id          = "${wl_key}--${reg_key}--canary"
-            workload_key        = wl_key
-            region_key          = reg_key
-            is_canary           = true
-            connect_timeout_ms  = var.connect_timeout_ms
-            lb_policy           = "LEAST_REQUEST"
-            dns_lookup_family   = "V4_ONLY"
-            service_port        = wl.port
-            protocol            = wl.protocol
-            spiffe_target_uri   = "spiffe://pontifex.internal/ns/${wl.namespace}/sa/${wl.service_account}"
-            dns_endpoint        = "${wl_key}-canary.${wl.namespace}.svc.${reg_key}.pontifex.internal"
-            max_connections     = max(50, floor(wl.circuit_breaker.max_connections * (wl.canary_percentage / 100)))
-            max_pending_reqs    = max(100, floor(wl.circuit_breaker.max_connections * 2 * (wl.canary_percentage / 100)))
-            max_requests        = max(200, floor(wl.circuit_breaker.max_connections * 5 * (wl.canary_percentage / 100)))
-            max_retries         = 3
+            cluster_id         = "${wl_key}--${reg_key}--canary"
+            workload_key       = wl_key
+            region_key         = reg_key
+            is_canary          = true
+            connect_timeout_ms = var.connect_timeout_ms
+            lb_policy          = "LEAST_REQUEST"
+            dns_lookup_family  = "V4_ONLY"
+            service_port       = wl.port
+            protocol           = wl.protocol
+            spiffe_target_uri  = "spiffe://pontifex.internal/ns/${wl.namespace}/sa/${wl.service_account}"
+            dns_endpoint       = "${wl_key}-canary.${wl.namespace}.svc.${reg_key}.pontifex.internal"
+            max_connections    = max(50, floor(wl.circuit_breaker.max_connections * (wl.canary_percentage / 100)))
+            max_pending_reqs   = max(100, floor(wl.circuit_breaker.max_connections * 2 * (wl.canary_percentage / 100)))
+            max_requests       = max(200, floor(wl.circuit_breaker.max_connections * 5 * (wl.canary_percentage / 100)))
+            max_retries        = 3
             http2_protocol_opts = wl.protocol == "grpc" || wl.protocol == "http2" ? {
               hpack_table_size               = 4096
               max_concurrent_streams         = 1024
